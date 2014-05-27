@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
 
-static NSString * const kEENAPIBaseURLString = @"https://login.eagleeyenetworks.com/";
+static NSString * const kEENAPIBaseURLString = @"https://login.eagleeyenetworks.com";
 static NSString * const kEENAPIRealm = @"eagleeyenetworks";
 
 @interface EENAPI : AFHTTPSessionManager
 
+typedef void (^EENEmptyBlock)();
 typedef void (^EENGenericBlock)(id);
 typedef void (^EENErrorBlock)(NSError *);
 
@@ -28,6 +29,10 @@ typedef void (^EENErrorBlock)(NSError *);
                        success:(EENGenericBlock)success
                        failure:(EENErrorBlock)failure;
 
+- (void)getDeviceListWithSuccess:(EENEmptyBlock)success
+                         failure:(EENErrorBlock)failure;
+
 @property (nonatomic, strong) NSArray *cameraIDList;
+@property (nonatomic, strong) NSArray *cameraNameList;
 
 @end

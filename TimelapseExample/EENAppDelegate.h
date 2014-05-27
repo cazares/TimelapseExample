@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+static CGFloat kCornerRadius = 10.0f;
+
 @interface EENAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

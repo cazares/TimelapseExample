@@ -21,6 +21,8 @@
 		FBC38DD619350BF600B07AA3 /* EENLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DD519350BF600B07AA3 /* EENLoginViewController.m */; };
 		FBC38DD919351EAA00B07AA3 /* EENAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DD819351EAA00B07AA3 /* EENAPI.m */; };
 		FBC38DDC193535AD00B07AA3 /* EENTimelapseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DDB193535AD00B07AA3 /* EENTimelapseViewController.m */; };
+		FBC38DDF1935477B00B07AA3 /* UIView+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DDE1935477B00B07AA3 /* UIView+Constraints.m */; };
+		FBC38DE219354B2100B07AA3 /* EENTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DE119354B2100B07AA3 /* EENTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,10 @@
 		FBC38DD819351EAA00B07AA3 /* EENAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EENAPI.m; sourceTree = "<group>"; };
 		FBC38DDA193535AD00B07AA3 /* EENTimelapseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EENTimelapseViewController.h; sourceTree = "<group>"; };
 		FBC38DDB193535AD00B07AA3 /* EENTimelapseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EENTimelapseViewController.m; sourceTree = "<group>"; };
+		FBC38DDD1935477B00B07AA3 /* UIView+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Constraints.h"; sourceTree = "<group>"; };
+		FBC38DDE1935477B00B07AA3 /* UIView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Constraints.m"; sourceTree = "<group>"; };
+		FBC38DE019354B2100B07AA3 /* EENTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EENTextField.h; path = TimelapseExample/EENTextField.h; sourceTree = "<group>"; };
+		FBC38DE119354B2100B07AA3 /* EENTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EENTextField.m; path = TimelapseExample/EENTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,8 @@
 		FBC38D9919350B8D00B07AA3 = {
 			isa = PBXGroup;
 			children = (
+				FBC38DE019354B2100B07AA3 /* EENTextField.h */,
+				FBC38DE119354B2100B07AA3 /* EENTextField.m */,
 				FBC38DAB19350B8D00B07AA3 /* TimelapseExample */,
 				FBC38DAC19350B8D00B07AA3 /* Supporting Files */,
 				FBC38DA419350B8D00B07AA3 /* Frameworks */,
@@ -126,6 +134,8 @@
 				FBC38DD819351EAA00B07AA3 /* EENAPI.m */,
 				FBC38DDA193535AD00B07AA3 /* EENTimelapseViewController.h */,
 				FBC38DDB193535AD00B07AA3 /* EENTimelapseViewController.m */,
+				FBC38DDD1935477B00B07AA3 /* UIView+Constraints.h */,
+				FBC38DDE1935477B00B07AA3 /* UIView+Constraints.m */,
 			);
 			path = TimelapseExample;
 			sourceTree = "<group>";
@@ -277,7 +287,9 @@
 			files = (
 				FBC38DDC193535AD00B07AA3 /* EENTimelapseViewController.m in Sources */,
 				FBC38DD619350BF600B07AA3 /* EENLoginViewController.m in Sources */,
+				FBC38DE219354B2100B07AA3 /* EENTextField.m in Sources */,
 				FBC38DD919351EAA00B07AA3 /* EENAPI.m in Sources */,
+				FBC38DDF1935477B00B07AA3 /* UIView+Constraints.m in Sources */,
 				FBC38DB219350B8D00B07AA3 /* main.m in Sources */,
 				FBC38DB619350B8D00B07AA3 /* EENAppDelegate.m in Sources */,
 			);

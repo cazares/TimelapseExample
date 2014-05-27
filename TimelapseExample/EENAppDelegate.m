@@ -14,7 +14,7 @@
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     EENLoginViewController *loginViewController = [[EENLoginViewController alloc] init];
     self.window.rootViewController = 
         [[UINavigationController alloc] initWithRootViewController:loginViewController];

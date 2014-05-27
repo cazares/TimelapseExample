@@ -9,13 +9,14 @@
 #import "EENLoginViewController.h"
 #import "EENAPI.h"
 #import "EENTimelapseViewController.h"
-
-static CGFloat kCornerRadius = 10.0f;
+#import "EENAppDelegate.h"
+#import "UIView+Constraints.h"
+#import "EENTextField.h"
 
 @interface EENLoginViewController ()
 
-@property (nonatomic, strong) UITextField *emailTextField;
-@property (nonatomic, strong) UITextField *passwordTextField;
+@property (nonatomic, strong) EENTextField *emailTextField;
+@property (nonatomic, strong) EENTextField *passwordTextField;
 @property (nonatomic, strong) UIButton *loginButton;
 @property (nonatomic, strong) EENTimelapseViewController *timelapseViewController;
 
@@ -25,15 +26,12 @@ static CGFloat kCornerRadius = 10.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
-    self.emailTextField = [[UITextField alloc] init];
+    self.emailTextField = [[EENTextField alloc] initWithDelegate:self placeholder:@"Email"];
     self.emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
-    [self setUpTextField:self.emailTextField placeholder:@"Email"];
     [self.view addSubview:self.emailTextField];
     
-    self.passwordTextField = [[UITextField alloc] init];
+    self.passwordTextField = [[EENTextField alloc] initWithDelegate:self placeholder:@"Password"];
     self.passwordTextField.secureTextEntry = YES;
-    [self setUpTextField:self.passwordTextField placeholder:@"Password"];
     [self.view addSubview:self.passwordTextField];
     
     self.loginButton = [[UIButton alloc] init];
@@ -50,44 +48,17 @@ static CGFloat kCornerRadius = 10.0f;
     NSDictionary *views = @{ @"email": self.emailTextField,
                              @"password": self.passwordTextField,
                              @"login": self.loginButton };
-    [self addConstraints:@"V:|-50-[email(50)]-[password(50)]-[login(50)]" metrics:nil views:views];
-    [self centerHorizontallyForView:self.emailTextField width:300];
-    [self centerHorizontallyForView:self.passwordTextField width:300];
-    [self centerHorizontallyForView:self.loginButton width:300];
+    [self.view lhs_addConstraints:@"V:|-50-[email(50)]-[password(50)]-[login(50)]" metrics:nil views:views];
+    [self.view lhs_centerHorizontallyForView:self.emailTextField width:300];
+    [self.view lhs_centerHorizontallyForView:self.passwordTextField width:300];
+    [self.view lhs_centerHorizontallyForView:self.loginButton width:300];
     self.timelapseViewController = [[EENTimelapseViewController alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     self.loginButton.enabled = YES;
-}
-
-- (NSArray *)addConstraints:(NSString *)constraint metrics:(NSDictionary *)metrics views:(NSDictionary *)views {
-    NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:constraint options:0 metrics:metrics views:views];
-    [self.view addConstraints:constraints];
-    return constraints;
-}
-
-- (NSArray *)centerHorizontallyForView:(UIView *)view width:(CGFloat)width {
-    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    [self.view addConstraint:constraint];
-    NSMutableArray *constraints = [@[constraint] mutableCopy];
-    if (width > 0) {
-        [constraints addObjectsFromArray:[self addConstraints:@"H:|-(>=1)-[view(width)]-(>=1)-|"
-                                                      metrics:@{@"width": @(width)} views:@{@"view": view}]];
-    }
-    return constraints;
-}
-
-- (void)setUpTextField:(UITextField *)textField placeholder:(NSString *)placeholder {
-    textField.delegate = self;
-    textField.placeholder = placeholder;
-    textField.translatesAutoresizingMaskIntoConstraints = NO;
-    textField.backgroundColor = [UIColor whiteColor];
-    textField.layer.cornerRadius = kCornerRadius;
-    textField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
-    textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    textField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
 
 - (void)authorizeWithToken:(NSString *)token {

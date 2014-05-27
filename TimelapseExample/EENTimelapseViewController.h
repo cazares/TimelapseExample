@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EENTimelapseViewController : UIViewController
+@interface EENTimelapseViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 
 @end

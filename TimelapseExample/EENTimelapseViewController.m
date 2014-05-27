@@ -44,7 +44,7 @@
     [self.view addSubview:self.cameraPicker];
     
     self.cameraButton = [[UIButton alloc] init];
-    [self setupButton:self.cameraButton title:[EENAPI client].cameraIDList[0]];
+    [self setupButton:self.cameraButton title:@""];
     [self.cameraButton addTarget:self action:@selector(cameraButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.cameraButton];
     
@@ -87,13 +87,37 @@
                              @"endPicker": self.endTimePicker,
                              @"endButton": self.endButton,
                              @"stepTextField": self.stepTextField };
+    CGFloat buttonWidth = 300.0f;
+    NSDictionary *metrics = @{ @"buttonHeight": @(50),
+                               @"pickerHeight": @(280) };
+    [self.view lhs_addConstraints:@"V:|-(buttonHeight)-[cameraButton(buttonHeight)]-[startButton(buttonHeight)]-[endButton(buttonHeight)]-[stepTextField(buttonHeight)]" metrics:metrics views:views];
+    [self.view lhs_centerHorizontallyForView:self.cameraButton width:buttonWidth];
+    [self.view lhs_centerHorizontallyForView:self.startButton width:buttonWidth];
+    [self.view lhs_centerHorizontallyForView:self.endButton width:buttonWidth];
+    [self.view lhs_centerHorizontallyForView:self.stepTextField width:buttonWidth];
+    
+    [self.view lhs_addConstraints:@"V:|[cameraPicker(pickerHeight)]" metrics:metrics views:views];
+    [self.view lhs_addConstraints:@"V:|[startPicker(pickerHeight)]" metrics:metrics views:views];
+    [self.view lhs_addConstraints:@"V:|[endPicker(pickerHeight)]" metrics:metrics views:views];
+    [self.view lhs_centerHorizontallyForView:self.cameraPicker width:buttonWidth];
+    [self.view lhs_centerHorizontallyForView:self.startTimePicker width:buttonWidth];
+    [self.view lhs_centerHorizontallyForView:self.endTimePicker width:buttonWidth];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.stepTextField.text = @"1";
-    NSArray *cameraIDList = [EENAPI client].cameraIDList;
-    [self setupButton:self.cameraButton title:cameraIDList[0]];
+    [[EENAPI client] getDeviceListWithSuccess:^{
+        NSArray *cameraNameList = [EENAPI client].cameraNameList;
+        if (cameraNameList.count > 0) {
+            self.cameraButton.titleLabel.text = cameraNameList[0];
+//            [self setupButton:self.cameraButton title:cameraNameList[0]];
+            [self.cameraPicker reloadAllComponents];
+        }
+    }
+    failure:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)setupButton:(UIButton *)button title:(NSString *)title {
@@ -139,17 +163,17 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [EENAPI client].cameraIDList.count;
+    return [EENAPI client].cameraNameList.count;
 }
 
 #pragma mark - UIPickerViewDelegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [EENAPI client].cameraIDList[row];
+    return [EENAPI client].cameraNameList[row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.cameraButton.titleLabel.text = [EENAPI client].cameraIDList[row];
+    self.cameraButton.titleLabel.text = [EENAPI client].cameraNameList[row];
 }
 
 @end

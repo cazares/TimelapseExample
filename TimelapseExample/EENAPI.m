@@ -67,6 +67,9 @@
                   self.sessionCookie = cookies[0];
                   [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookies[0]];
               }
+              NSError *error;
+              NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:&error];
+              self.cameraIDList = response[@"camera_access"];
               success(responseObject);
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {

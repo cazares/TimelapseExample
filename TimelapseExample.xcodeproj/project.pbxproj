@@ -18,10 +18,9 @@
 		FBC38DBF19350B8D00B07AA3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC38DBE19350B8D00B07AA3 /* XCTest.framework */; };
 		FBC38DC019350B8D00B07AA3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC38DA519350B8D00B07AA3 /* Foundation.framework */; };
 		FBC38DC119350B8D00B07AA3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC38DA919350B8D00B07AA3 /* UIKit.framework */; };
-		FBC38DC919350B8D00B07AA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBC38DC719350B8D00B07AA3 /* InfoPlist.strings */; };
-		FBC38DCB19350B8D00B07AA3 /* TimelapseExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DCA19350B8D00B07AA3 /* TimelapseExampleTests.m */; };
 		FBC38DD619350BF600B07AA3 /* EENLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DD519350BF600B07AA3 /* EENLoginViewController.m */; };
 		FBC38DD919351EAA00B07AA3 /* EENAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DD819351EAA00B07AA3 /* EENAPI.m */; };
+		FBC38DDC193535AD00B07AA3 /* EENTimelapseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC38DDB193535AD00B07AA3 /* EENTimelapseViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,13 +49,12 @@
 		FBC38DB719350B8D00B07AA3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FBC38DBD19350B8D00B07AA3 /* TimelapseExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimelapseExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC38DBE19350B8D00B07AA3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		FBC38DC619350B8D00B07AA3 /* TimelapseExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimelapseExampleTests-Info.plist"; sourceTree = "<group>"; };
-		FBC38DC819350B8D00B07AA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FBC38DCA19350B8D00B07AA3 /* TimelapseExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimelapseExampleTests.m; sourceTree = "<group>"; };
 		FBC38DD419350BF600B07AA3 /* EENLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EENLoginViewController.h; sourceTree = "<group>"; };
 		FBC38DD519350BF600B07AA3 /* EENLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EENLoginViewController.m; sourceTree = "<group>"; };
 		FBC38DD719351EAA00B07AA3 /* EENAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EENAPI.h; sourceTree = "<group>"; };
 		FBC38DD819351EAA00B07AA3 /* EENAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EENAPI.m; sourceTree = "<group>"; };
+		FBC38DDA193535AD00B07AA3 /* EENTimelapseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EENTimelapseViewController.h; sourceTree = "<group>"; };
+		FBC38DDB193535AD00B07AA3 /* EENTimelapseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EENTimelapseViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				FBC38DAB19350B8D00B07AA3 /* TimelapseExample */,
-				FBC38DC419350B8D00B07AA3 /* TimelapseExampleTests */,
+				FBC38DAC19350B8D00B07AA3 /* Supporting Files */,
 				FBC38DA419350B8D00B07AA3 /* Frameworks */,
 				FBC38DA319350B8D00B07AA3 /* Products */,
 				EAB8995E882143B8A4D0E4E5 /* Pods.xcconfig */,
@@ -122,11 +120,12 @@
 				FBC38DB419350B8D00B07AA3 /* EENAppDelegate.h */,
 				FBC38DB519350B8D00B07AA3 /* EENAppDelegate.m */,
 				FBC38DB719350B8D00B07AA3 /* Images.xcassets */,
-				FBC38DAC19350B8D00B07AA3 /* Supporting Files */,
 				FBC38DD419350BF600B07AA3 /* EENLoginViewController.h */,
 				FBC38DD519350BF600B07AA3 /* EENLoginViewController.m */,
 				FBC38DD719351EAA00B07AA3 /* EENAPI.h */,
 				FBC38DD819351EAA00B07AA3 /* EENAPI.m */,
+				FBC38DDA193535AD00B07AA3 /* EENTimelapseViewController.h */,
+				FBC38DDB193535AD00B07AA3 /* EENTimelapseViewController.m */,
 			);
 			path = TimelapseExample;
 			sourceTree = "<group>";
@@ -140,24 +139,7 @@
 				FBC38DB319350B8D00B07AA3 /* TimelapseExample-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		FBC38DC419350B8D00B07AA3 /* TimelapseExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				FBC38DCA19350B8D00B07AA3 /* TimelapseExampleTests.m */,
-				FBC38DC519350B8D00B07AA3 /* Supporting Files */,
-			);
-			path = TimelapseExampleTests;
-			sourceTree = "<group>";
-		};
-		FBC38DC519350B8D00B07AA3 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				FBC38DC619350B8D00B07AA3 /* TimelapseExampleTests-Info.plist */,
-				FBC38DC719350B8D00B07AA3 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
+			path = TimelapseExample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +232,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBC38DC919350B8D00B07AA3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC38DDC193535AD00B07AA3 /* EENTimelapseViewController.m in Sources */,
 				FBC38DD619350BF600B07AA3 /* EENLoginViewController.m in Sources */,
 				FBC38DD919351EAA00B07AA3 /* EENAPI.m in Sources */,
 				FBC38DB219350B8D00B07AA3 /* main.m in Sources */,
@@ -305,7 +287,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBC38DCB19350B8D00B07AA3 /* TimelapseExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,14 +305,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				FBC38DAF19350B8D00B07AA3 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FBC38DC719350B8D00B07AA3 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FBC38DC819350B8D00B07AA3 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

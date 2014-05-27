@@ -28,4 +28,6 @@ typedef void (^EENErrorBlock)(NSError *);
                        success:(EENGenericBlock)success
                        failure:(EENErrorBlock)failure;
 
+@property (nonatomic, strong) NSArray *cameraIDList;
+
 @end

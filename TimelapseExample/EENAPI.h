@@ -9,6 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
 
+static NSString * const kEENAPIBaseURLString = @"https://login.eagleeyenetworks.com/";
+static NSString * const kEENAPIRealm = @"eagleeyenetworks";
+
 @interface EENAPI : AFHTTPSessionManager
+
+typedef void (^EENGenericBlock)(id);
+typedef void (^EENErrorBlock)(NSError *);
+
++ (instancetype)client;
+
+- (void)authenticateWithUsername:(NSString *)username
+                            password:(NSString *)password
+                             success:(EENGenericBlock)success
+                             failure:(EENErrorBlock)failure;
+
+- (void)authorizeUserWithToken:(NSString *)token
+                       success:(EENGenericBlock)success
+                       failure:(EENErrorBlock)failure;
 
 @end

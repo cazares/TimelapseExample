@@ -7,6 +7,7 @@
 //
 
 #import "EENLoginViewController.h"
+#import "EENAPI.h"
 
 static CGFloat kCornerRadius = 10.0f;
 
@@ -23,6 +24,7 @@ static CGFloat kCornerRadius = 10.0f;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     self.emailTextField = [[UITextField alloc] init];
+    self.emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
     [self setUpTextField:self.emailTextField placeholder:@"Email"];
     [self.view addSubview:self.emailTextField];
     
@@ -78,10 +80,30 @@ static CGFloat kCornerRadius = 10.0f;
     textField.backgroundColor = [UIColor whiteColor];
     textField.layer.cornerRadius = kCornerRadius;
     textField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
+    textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+}
+
+- (void)authorizeWithToken:(NSString *)token {
+    [[EENAPI client] authorizeUserWithToken:token
+                                    success:^(id user) {
+                                        NSLog(@"successfully authorized");
+                                    }
+                                    failure:^(NSError *error) {
+                                        NSLog(@"%@", error);
+                                    }];
 }
 
 - (void)loginButtonPressed {
-    
+    [[EENAPI client] authenticateWithUsername:self.emailTextField.text
+                                     password:self.passwordTextField.text
+                                      success:^(NSString *token) {
+                                          NSLog(@"successfully authenticated");
+                                          [self authorizeWithToken:token];
+                                      }
+                                      failure:^(NSError *error) {
+                                          NSLog(@"%@", error);
+                                      }];
 }
 
 @end

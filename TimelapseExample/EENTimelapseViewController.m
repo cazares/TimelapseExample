@@ -41,7 +41,6 @@
     self.cameraPicker.dataSource = self;
     self.cameraPicker.backgroundColor = [UIColor whiteColor];
     self.cameraPicker.hidden = YES;
-    [self.view addSubview:self.cameraPicker];
     
     self.cameraButton = [[UIButton alloc] init];
     [self setupButton:self.cameraButton title:@""];
@@ -53,9 +52,8 @@
     self.startTimePicker.backgroundColor = [UIColor whiteColor];
     self.startTimePicker.hidden = YES;
     self.startTimePicker.date = [NSDate date];
-    [self.startTimePicker addTarget:self action:@selector(setStartFromPicker)
-                   forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.startTimePicker];
+    [self.startTimePicker addTarget:self action:@selector(setStartFromPicker) forControlEvents:UIControlEventValueChanged];
+    [self.startTimePicker addTarget:self action:@selector(hideAllPickers) forControlEvents:UIControlEventTouchUpOutside];
     
     self.startButton = [[UIButton alloc] init];
     [self setupButton:self.startButton title:[self.fullDateFormatter stringFromDate:self.startTimePicker.date]];
@@ -67,9 +65,8 @@
     self.endTimePicker.backgroundColor = [UIColor whiteColor];
     self.endTimePicker.hidden = YES;
     self.endTimePicker.date = [NSDate date];
-    [self.endTimePicker addTarget:self action:@selector(setEndFromPicker)
-                 forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.endTimePicker];
+    [self.endTimePicker addTarget:self action:@selector(setEndFromPicker) forControlEvents:UIControlEventValueChanged];
+    [self.endTimePicker addTarget:self action:@selector(hideAllPickers) forControlEvents:UIControlEventTouchUpOutside];
     
     self.endButton = [[UIButton alloc] init];
     [self setupButton:self.endButton title:[self.fullDateFormatter stringFromDate:self.endTimePicker.date]];
@@ -79,6 +76,9 @@
     self.stepTextField = [[EENTextField alloc] initWithDelegate:self placeholder:@"Step between frames"];
     self.stepTextField.keyboardType = UIKeyboardTypeDecimalPad;
     [self.view addSubview:self.stepTextField];
+    [self.view addSubview:self.cameraPicker];
+    [self.view addSubview:self.startTimePicker];
+    [self.view addSubview:self.endTimePicker];
     
     NSDictionary *views = @{ @"cameraPicker": self.cameraPicker,
                              @"cameraButton": self.cameraButton,
@@ -88,9 +88,11 @@
                              @"endButton": self.endButton,
                              @"stepTextField": self.stepTextField };
     CGFloat buttonWidth = 300.0f;
-    NSDictionary *metrics = @{ @"buttonHeight": @(50),
+    CGFloat buttonHeight = 50.0f;
+    CGFloat pickerWidth = 320.0f;
+    NSDictionary *metrics = @{ @"buttonHeight": @(buttonHeight),
                                @"pickerHeight": @(280) };
-    [self.view lhs_addConstraints:@"V:|-(buttonHeight)-[cameraButton(buttonHeight)]-[startButton(buttonHeight)]-[endButton(buttonHeight)]-[stepTextField(buttonHeight)]" metrics:metrics views:views];
+    [self.view lhs_addConstraints:@"V:|-(100)-[cameraButton(buttonHeight)]-[startButton(buttonHeight)]-[endButton(buttonHeight)]-[stepTextField(buttonHeight)]" metrics:metrics views:views];
     [self.view lhs_centerHorizontallyForView:self.cameraButton width:buttonWidth];
     [self.view lhs_centerHorizontallyForView:self.startButton width:buttonWidth];
     [self.view lhs_centerHorizontallyForView:self.endButton width:buttonWidth];
@@ -99,19 +101,20 @@
     [self.view lhs_addConstraints:@"V:|[cameraPicker(pickerHeight)]" metrics:metrics views:views];
     [self.view lhs_addConstraints:@"V:|[startPicker(pickerHeight)]" metrics:metrics views:views];
     [self.view lhs_addConstraints:@"V:|[endPicker(pickerHeight)]" metrics:metrics views:views];
-    [self.view lhs_centerHorizontallyForView:self.cameraPicker width:buttonWidth];
-    [self.view lhs_centerHorizontallyForView:self.startTimePicker width:buttonWidth];
-    [self.view lhs_centerHorizontallyForView:self.endTimePicker width:buttonWidth];
+    [self.view lhs_centerHorizontallyForView:self.cameraPicker width:pickerWidth];
+    [self.view lhs_centerHorizontallyForView:self.startTimePicker width:pickerWidth];
+    [self.view lhs_centerHorizontallyForView:self.endTimePicker width:pickerWidth];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.stepTextField.text = @"1";
+    [self setStartFromPicker];
+    [self setEndFromPicker];
     [[EENAPI client] getDeviceListWithSuccess:^{
         NSArray *cameraNameList = [EENAPI client].cameraNameList;
         if (cameraNameList.count > 0) {
-            self.cameraButton.titleLabel.text = cameraNameList[0];
-//            [self setupButton:self.cameraButton title:cameraNameList[0]];
+            [self setTitle:cameraNameList[0] forButton:self.cameraButton];
             [self.cameraPicker reloadAllComponents];
         }
     }
@@ -120,40 +123,57 @@
     }];
 }
 
-- (void)setupButton:(UIButton *)button title:(NSString *)title {
-    button.translatesAutoresizingMaskIntoConstraints = NO;
-    button.backgroundColor = [UIColor grayColor];
-    button.layer.cornerRadius = kCornerRadius;
+- (void)setTitle:(NSString *)title forButton:(UIButton *)button {
     NSAttributedString *attributedTitle =
     [[NSAttributedString alloc] initWithString:title
                                     attributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor] }];
     [button setAttributedTitle:attributedTitle forState:UIControlStateNormal];
 }
 
+- (void)setupButton:(UIButton *)button title:(NSString *)title {
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    button.backgroundColor = [UIColor grayColor];
+    button.layer.cornerRadius = kCornerRadius;
+    [self setTitle:title forButton:button];
+}
+
 - (void)cameraButtonPressed {
+    [self hideAllPickers];
     self.cameraPicker.hidden = !self.cameraPicker.hidden;
-    self.startTimePicker.hidden = YES;
-    self.endTimePicker.hidden = YES;
 }
 
 - (void)startButtonPressed {
-    self.cameraPicker.hidden = YES;
+    [self hideAllPickers];
     self.startTimePicker.hidden = !self.startTimePicker.hidden;
-    self.endTimePicker.hidden = YES;
 }
 
 - (void)endButtonPressed {
-    self.cameraPicker.hidden = YES;
-    self.startTimePicker.hidden = YES;
+    [self hideAllPickers];
     self.endTimePicker.hidden = !self.endTimePicker.hidden;
 }
 
 - (void)setStartFromPicker {
-    self.startButton.titleLabel.text = [self.fullDateFormatter stringFromDate:self.startTimePicker.date];
+    [self setTitle:[self.fullDateFormatter stringFromDate:self.startTimePicker.date] forButton:self.startButton];
+    self.startTimePicker.hidden = YES;
 }
 
 - (void)setEndFromPicker {
-    self.endButton.titleLabel.text = [self.fullDateFormatter stringFromDate:self.endTimePicker.date];
+    [self setTitle:[self.fullDateFormatter stringFromDate:self.endTimePicker.date] forButton:self.endButton];
+    self.endTimePicker.hidden = YES;
+}
+
+- (void)hideAllPickers {
+    self.cameraPicker.hidden = YES;
+    self.startTimePicker.hidden = YES;
+    self.endTimePicker.hidden = YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self hideAllPickers];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self hideAllPickers];
 }
 
 #pragma mark - UIPickerViewDataSource

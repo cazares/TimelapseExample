@@ -93,6 +93,7 @@
              }
              self.cameraIDList = cameraIDs;
              self.cameraNameList = cameraNames;
+             success();
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              failure(error);
